@@ -23,6 +23,9 @@ def builtin(immediate=False, name=None, increment_addr=True):
         Is this word immediate?
     name : str, optional
         The name of this word. Defaults to ``f.__name__``.
+    increment_addr : bool, optional
+        Should this function increment the state's address? This is normally
+        true except for words that cause a jump.
     """
     def _(f):
         if increment_addr:
@@ -49,7 +52,7 @@ def unary_func(f, doc=None):
     f : callable[any -> any]
         The function to wrap.
     doc : str, optional
-        The docstring to use, default: ( n1 n2 -- n2 ).
+        The docstring to use, default: ( n1 -- n2 ).
     """
     def _(st):
         """( n1 -- n2 )
