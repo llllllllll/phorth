@@ -1,0 +1,92 @@
+======
+phorth
+======
+
+A small forth-like language.
+
+
+Provided Words
+--------------
+
+Words of the format ``<builtin ...>`` are primitives that are provided by the
+interpreter, the others are words that are defined in ``stdlib.fs``
+
+.. code-block::
+
+   > words
+   {'!': '<builtin: write ( n1 n2 -- )>',
+    '!=': '<builtin: ne ( n1 n2 -- f )>',
+    '&': '<builtin: and_ ( n1 n2 -- n3 )>',
+    "'": '<builtin: quote>',
+    '(': '<builtin: lparen>',
+    ')': '<builtin: rparen>',
+    '*': '<builtin: mul ( n1 n2 -- n3 )>',
+    '**': '<builtin: pow ( n1 n2 -- n3 )>',
+    '**mod': '<builtin: pow ( n1 n2 n3 -- n4 )>',
+    '+': '<builtin: add ( n1 n2 -- n3 )>',
+    '-': '<builtin: sub ( n1 n2 -- n3 )>',
+    '-rot': '<builtin: rrot ( n1 n2 n3 -- n3 n1 n2 )>',
+    '.': '<builtin: print_top ( n -- )>',
+    '.s': '<builtin: print_stack ( -- )>',
+    '/': '<builtin: truediv ( n1 n2 -- n3 )>',
+    '/mod': '<builtin: divmod ( n1 n2 n3 -- n4 )>',
+    '0<': ': 0< ( n -- f ) 0 < ;',
+    '0=': ': 0= ( n -- f ) 0 = ;',
+    '0>': ': 0> ( n -- f ) 0 > ;',
+    '1+': ': 1+ ( n -- n ) 1 + ;',
+    '1-': ': 1- ( n -- n ) 1 - ;',
+    '2*': ': 2* ( n1 -- n2 ) 2 * ;',
+    '2+': ': 2+ ( n1 -- n2 ) 2 + ;',
+    '2-': ': 2- ( n1 -- n2 ) 2 - ;',
+    '2/': ': 2/ ( n1 -- n2 ) 2 / ;',
+    '2drop': ': 2drop ( n1 n2 -- ) drop drop ;',
+    '2dup': ': 2dup ( n1 n2 -- n1 n2 n1 n2 ) over over ;',
+    '2swap': '<builtin: twoswap ( n1 n2 n3 n4 -- n3 n4 n1 n2 )>',
+    ':': '<builtin: colon>',
+    ';': '<builtin: semicolon>',
+    '<': '<builtin: lt ( n1 n2 -- f )>',
+    '<<': '<builtin: lshift ( n1 n2 -- n3 )>',
+    '<=': '<builtin: le ( n1 n2 -- f )>',
+    '=': '<builtin: eq ( n1 n2 -- f )>',
+    '>': '<builtin: gt ( n1 n2 -- f )>',
+    '>=': '<builtin: ge ( n1 n2 -- f )>',
+    '>>': '<builtin: rshift ( n1 n2 -- n3 )>',
+    '?': ': ? ( adr -- ) @ . ;',
+    '@': '<builtin: read ( n -- n )>',
+    '[': '<builtin: lbracket>',
+    ']': '<builtin: rbracket>',
+    '^': '<builtin: xor ( n1 n2 -- n3 )>',
+    'abs': '<builtin: abs ( n1 -- n2 )>',
+    'and': '<builtin: and_ ( n1 n2 -- n3 )>',
+    'between': '<builtin: between ( n1 n2 n3 -- n4 )>',
+    'bool': '<builtin: bool ( n -- f )>',
+    'bye': '<builtin: bye>',
+    'clear': '<builtin: clear ( -- )>',
+    'constant': '<builtin: constant>',
+    'depth': '<builtin: depth ( -- n )>',
+    'drop': '<builtin: drop ( n -- )>',
+    'dup': '<builtin: dup ( n -- n n )>',
+    'false': 'False',
+    'if': '<builtin: if_>',
+    'immediate': '<builtin: immediate>',
+    'import': '<builtin: import_>',
+    'invert': '<builtin: invert ( n1 -- n2 )>',
+    'jmp': '<builtin: jmp>',
+    'max': '<builtin: max ( n1 n2 -- n3 )>',
+    'min': '<builtin: min ( n1 n2 -- n3 )>',
+    'mod': '<builtin: mod ( n1 n2 -- n3 )>',
+    'negate': '<builtin: neg ( n1 -- n2 )>',
+    'nip': ': nip ( n1 n2 -- n1 ) swap drop ;',
+    'noop': ': noop ( -- )  ;',
+    'not': '<builtin: not_ ( n -- f )>',
+    'or': '<builtin: or_ ( n1 n2 -- n3 )>',
+    'over': '<builtin: over ( n1 n2 -- n2 n1 n2 )>',
+    'positive': '<builtin: pos ( n1 -- n2 )>',
+    'rot': '<builtin: rot ( n1 n2 n3 -- n2 n3 n1 )>',
+    'see': '<builtin: see>',
+    'swap': '<builtin: swap ( n1 n2 -- n2 n1 )>',
+    'then': '<builtin: then>',
+    'true': 'True',
+    'tuck': ': tuck ( n1 n2 -- n2 n1 n2 ) dup -rot ;',
+    'words': '<builtin: words_ ( -- )>',
+    '|': '<builtin: or_ ( n1 n2 -- n3 )>'}
