@@ -7,6 +7,12 @@
 : 0> ( n -- f )
   0 > ;
 
+: 1+ ( n -- n )
+  1 + ;
+
+: 1- ( n -- n )
+  1 - ;
+
 : 2* ( n1 -- n2 )
   2 * ;
 
@@ -22,23 +28,14 @@
 : 2drop ( n1 n2 -- )
   drop drop ;
 
-: 2dup ( n1 n2 -- n1 n2 n1 n2 )
-  over over ;
-
-: 1+ ( n -- n )
-  1 + ;
-
-: 1- ( n -- n )
-  1 - ;
-
 : ? ( adr -- )
   @ . ;
 
-: nip ( n1 n2 -- n1 )
-  swap drop ;
-
 : noop ( -- )
   ;
+
+: -rot ( n1 n2 n3 -- n3 n1 n2 )
+  rot rot ;
 
 : tuck ( n1 n2 -- n2 n1 n2 )
   dup -rot ;
