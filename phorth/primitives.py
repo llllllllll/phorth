@@ -128,3 +128,22 @@ def handle_exception(exc,
             exc,
         ),
     )
+
+
+def py_call_impl(f, *reversed_args):
+    """Implementation for the py::call word that calls a python function from
+    the stack.
+
+    Parameters
+    ----------
+    f : callable
+        The function to call.
+    *reversed_args
+        The arguments to apply to ``f`` in reverse order.
+
+    Returns
+    -------
+    called : any
+        The result of calling ``f`` with ``reversed_args`` in reverse order.
+    """
+    return f(*reversed(reversed_args))

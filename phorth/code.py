@@ -30,6 +30,7 @@ from .primitives import (
     print_stack_impl,
     process_lit,
     push_return_addr,
+    py_call_impl,
     read_impl,
     write_impl,
 )
@@ -173,9 +174,16 @@ def build_phorth_ctx(stack_size, memory):
         yield instructions.LOAD_CONST(None)
         yield instructions.YIELD_VALUE()
 
-    word_impl = make_word_impl()
+    def _debug_print():
+        """DUP_TOP() and PRINT_EXPR()
 
-    def _word():
+        Used for debugging the bytecode by providing a "print statment" like
+        feature in the bytecode.
+        """
+        yield instructions.DUP_TOP()
+        yield instructions.PRINT_EXPR()
+
+    def _word(word_impl=make_word_impl()):
         yield instructions.LOAD_CONST(word_impl)
         yield instructions.CALL_FUNCTION(0)
 
@@ -261,10 +269,6 @@ def build_phorth_ctx(stack_size, memory):
         yield instructions.LOAD_CONST(s)
         yield instructions.CALL_FUNCTION(1)
         yield instructions.STORE_FAST('here')
-
-    def _debug_print():
-        yield instructions.DUP_TOP()
-        yield instructions.PRINT_EXPR()
 
     handle_exception_instr = instructions.POP_TOP()
     setup_except_instr = instructions.SETUP_EXCEPT(handle_exception_instr)
@@ -613,6 +617,73 @@ def build_phorth_ctx(stack_size, memory):
         yield from _word()
         yield instructions.COMPARE_OP.EQ
         yield instructions.POP_JUMP_IF_FALSE(loop)
+        yield next_instruction()
+
+    @builtin(name='py::import')
+    def py_import():
+        yield instructions.LOAD_CONST(__import__)
+        yield instructions.ROT_TWO()
+        yield instructions.CALL_FUNCTION(1)
+        yield next_instruction()
+
+    @builtin(name='py::getattr')
+    def py_getattr():
+        yield instructions.LOAD_CONST(getattr)
+        yield instructions.ROT_THREE()
+        yield instructions.CALL_FUNCTION(2)
+        yield next_instruction()
+
+    def _nrot():
+        yield instructions.ROT_THREE()
+        yield instructions.ROT_THREE()
+
+    @builtin(name='py::call')
+    def py_call():
+        start = instructions.BUILD_LIST(0)
+
+        # validate that nargs is >= 0 to avoid infinite loop
+        yield instructions.DUP_TOP()
+        yield instructions.LOAD_CONST(0)
+        yield instructions.COMPARE_OP.LT
+        yield instructions.POP_JUMP_IF_FALSE(start)
+        yield instructions.LOAD_CONST('nargs must be >= 0; got %s')
+        yield instructions.ROT_TWO()
+        yield instructions.BINARY_MODULO()
+        yield instructions.LOAD_CONST(ValueError)
+        yield instructions.ROT_TWO()
+        yield instructions.CALL_FUNCTION(1)
+        yield instructions.RAISE_VARARGS(1)
+
+        # create a list to hold the function and arguments; append the function
+        # first
+        yield start
+        yield from _nrot()
+        yield instructions.LIST_APPEND(1)
+        yield instructions.STORE_FAST('tmp')
+
+        # use the nargs as a counter; append elements until nargs == 0
+        loop = instructions.DUP_TOP()
+        yield loop
+        yield instructions.LOAD_CONST(0)
+        yield instructions.COMPARE_OP.EQ
+
+        call_impl = instructions.POP_TOP()
+        yield instructions.POP_JUMP_IF_TRUE(call_impl)
+
+        yield instructions.LOAD_CONST(1)
+        yield instructions.ROT_TWO()
+        yield instructions.BINARY_SUBTRACT()
+        yield instructions.LOAD_FAST('tmp')
+        yield from _nrot()
+        yield instructions.LIST_APPEND(1)
+        yield instructions.POP_TOP()
+        yield instructions.JUMP_ABSOLUTE(loop)
+
+        # *unpack the argument list into `py_call_impl`
+        yield call_impl
+        yield instructions.LOAD_CONST(py_call_impl)
+        yield instructions.LOAD_FAST('tmp')
+        yield instructions.CALL_FUNCTION_VAR(0)
         yield next_instruction()
 
     _compile_vocab()

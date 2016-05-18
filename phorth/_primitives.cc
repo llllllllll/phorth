@@ -537,7 +537,8 @@ PyInit__primitives(void)
                                                 "latest"_p,
                                                 "cstack"_p,
                                                 "stack_size"_p,
-                                                "literals"_p))) {
+                                                "literals"_p,
+                                                "tmp"_p))) {
         return nullptr;
     }
     if (m.setattr("Word"_p, Word)) {

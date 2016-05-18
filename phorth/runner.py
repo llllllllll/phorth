@@ -32,6 +32,7 @@ def run_phorth(stack_size=30000, memory=65535):
             cstack=[],
             stack_size=0,
             literals=[],
+            tmp=None,
         ))
     except Done:
         return None

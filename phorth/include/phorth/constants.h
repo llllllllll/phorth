@@ -7,4 +7,5 @@ constexpr std::size_t LATEST = 2;
 constexpr std::size_t CSTACK = 3;
 constexpr std::size_t STACK_SIZE = 4;
 constexpr std::size_t LITERALS = 5;
-constexpr std::size_t EXPECTED_NLOCALS = 6;
+constexpr std::size_t TMP = 6;
+constexpr std::size_t EXPECTED_NLOCALS = 7;
