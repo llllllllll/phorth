@@ -275,7 +275,7 @@ memory size of ``2 ** 16 - 1``
                 83 NOP
                 84 JUMP_ABSOLUTE            3
            >>   87 POP_TOP
-                88 LOAD_CONST               3 (<function process_lit at 0x7fc95da0c620>)
+                88 LOAD_CONST               3 (<function process_lit at 0x7f05c8228620>)
                 91 ROT_TWO
                 92 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
                 95 DUP_TOP
@@ -309,7 +309,7 @@ memory size of ``2 ** 16 - 1``
                165 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
                168 UNPACK_SEQUENCE          2
                171 YIELD_VALUE
-           >>  172 LOAD_CONST              11 (functools.partial(<built-in function next>, <generator object make_word_impl.<locals>.read_words at 0x7fc95da09c50>))
+           >>  172 LOAD_CONST              11 (functools.partial(<built-in function next>, <generator object make_word_impl.<locals>.read_words at 0x7f05c8223db0>))
                175 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
                178 JUMP_ABSOLUTE          181
            >>  181 LOAD_CONST              10 (<built-in function pop_return_addr>)
@@ -344,14 +344,14 @@ memory size of ``2 ** 16 - 1``
                254 LOAD_CONST              17 (<built-in function docol_impl>)
                257 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
                260 YIELD_VALUE
-               261 LOAD_CONST              18 (<function dis at 0x7fc963c0b400>)
+               261 LOAD_CONST              18 (<function dis at 0x7f05ce428378>)
                264 LOAD_CONST              19 (<built-in function _getframe>)
                267 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
                270 LOAD_ATTR                1 (f_code)
                273 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
                276 POP_TOP
                277 JUMP_ABSOLUTE          181
-               280 LOAD_CONST              20 (<toolz.functoolz.Compose object at 0x7fc95d9b2518>)
+               280 LOAD_CONST              20 (<toolz.functoolz.Compose object at 0x7f05c81cd978>)
                283 LOAD_CONST              21 (<built-in function globals>)
                286 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
                289 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
@@ -442,67 +442,67 @@ memory size of ``2 ** 16 - 1``
                488 ROT_TWO
                489 POP_TOP
                490 JUMP_ABSOLUTE          181
-               493 BINARY_OR
-               494 JUMP_ABSOLUTE          181
-               497 NOP
-               498 JUMP_ABSOLUTE          181
-               501 BINARY_POWER
+               493 LOAD_CONST               1 (None)
+               496 JUMP_ABSOLUTE          181
+               499 COMPARE_OP               2 (==)
                502 JUMP_ABSOLUTE          181
-               505 LOAD_FAST                1 (here)
+               505 COMPARE_OP               1 (<=)
                508 JUMP_ABSOLUTE          181
-               511 BINARY_MODULO
+               511 BINARY_MULTIPLY
                512 JUMP_ABSOLUTE          181
-               515 BINARY_SUBTRACT
+               515 PRINT_EXPR
                516 JUMP_ABSOLUTE          181
-               519 LOAD_CONST              23 (False)
-               522 JUMP_ABSOLUTE          181
-               525 PRINT_EXPR
-               526 JUMP_ABSOLUTE          181
-               529 LOAD_CONST               1 (None)
+               519 BINARY_ADD
+               520 JUMP_ABSOLUTE          181
+               523 BINARY_SUBTRACT
+               524 JUMP_ABSOLUTE          181
+               527 ROT_TWO
+               528 JUMP_ABSOLUTE          181
+               531 BINARY_LSHIFT
                532 JUMP_ABSOLUTE          181
-               535 DUP_TOP
-               536 JUMP_ABSOLUTE          181
-               539 LOAD_FAST                2 (latest)
+               535 LOAD_FAST                3 (cstack)
+               538 JUMP_ABSOLUTE          181
+               541 BINARY_XOR
                542 JUMP_ABSOLUTE          181
-               545 ROT_TWO
+               545 DUP_TOP
                546 JUMP_ABSOLUTE          181
-               549 POP_TOP
-               550 JUMP_ABSOLUTE          181
-               553 BINARY_XOR
-               554 JUMP_ABSOLUTE          181
-               557 BINARY_MATRIX_MULTIPLY
-               558 JUMP_ABSOLUTE          181
-               561 LOAD_FAST                3 (cstack)
-               564 JUMP_ABSOLUTE          181
-               567 LOAD_CONST               2 (True)
+               549 COMPARE_OP               0 (<)
+               552 JUMP_ABSOLUTE          181
+               555 BINARY_POWER
+               556 JUMP_ABSOLUTE          181
+               559 LOAD_CONST               2 (True)
+               562 JUMP_ABSOLUTE          181
+               565 BINARY_MODULO
+               566 JUMP_ABSOLUTE          181
+               569 BINARY_AND
                570 JUMP_ABSOLUTE          181
-               573 COMPARE_OP               4 (>)
+               573 LOAD_CONST              23 (False)
                576 JUMP_ABSOLUTE          181
-               579 COMPARE_OP               2 (==)
-               582 JUMP_ABSOLUTE          181
-               585 ROT_THREE
+               579 NOP
+               580 JUMP_ABSOLUTE          181
+               583 COMPARE_OP               5 (>=)
                586 JUMP_ABSOLUTE          181
                589 DUP_TOP_TWO
                590 JUMP_ABSOLUTE          181
-               593 BINARY_LSHIFT
+               593 POP_TOP
                594 JUMP_ABSOLUTE          181
-               597 COMPARE_OP               1 (<=)
+               597 COMPARE_OP               3 (!=)
                600 JUMP_ABSOLUTE          181
-               603 BINARY_AND
-               604 JUMP_ABSOLUTE          181
-               607 BINARY_TRUE_DIVIDE
-               608 JUMP_ABSOLUTE          181
-               611 BINARY_MULTIPLY
-               612 JUMP_ABSOLUTE          181
-               615 BINARY_ADD
-               616 JUMP_ABSOLUTE          181
-               619 BINARY_RSHIFT
-               620 JUMP_ABSOLUTE          181
-               623 COMPARE_OP               0 (<)
-               626 JUMP_ABSOLUTE          181
-               629 COMPARE_OP               5 (>=)
-               632 JUMP_ABSOLUTE          181
-               635 COMPARE_OP               3 (!=)
+               603 LOAD_FAST                1 (here)
+               606 JUMP_ABSOLUTE          181
+               609 ROT_THREE
+               610 JUMP_ABSOLUTE          181
+               613 BINARY_RSHIFT
+               614 JUMP_ABSOLUTE          181
+               617 BINARY_OR
+               618 JUMP_ABSOLUTE          181
+               621 LOAD_FAST                2 (latest)
+               624 JUMP_ABSOLUTE          181
+               627 COMPARE_OP               4 (>)
+               630 JUMP_ABSOLUTE          181
+               633 BINARY_TRUE_DIVIDE
+               634 JUMP_ABSOLUTE          181
+               637 BINARY_MATRIX_MULTIPLY
                638 JUMP_ABSOLUTE          181
                641 LOAD_CONST               0 (<built-in function push_return_addr>)
                644 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
@@ -552,33 +552,78 @@ memory size of ``2 ** 16 - 1``
                758 POP_TOP
                759 JUMP_ABSOLUTE          309
                762 JUMP_ABSOLUTE          181
-               765 LOAD_CONST              10 (<built-in function pop_return_addr>)
+               765 LOAD_CONST              36 (<function license_impl at 0x7f05c8228840>)
                768 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
                771 POP_TOP
                772 JUMP_ABSOLUTE          181
-               775 LOAD_CONST              36 (764)
-               778 LOAD_CONST               0 (<built-in function push_return_addr>)
-               781 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
-               784 POP_TOP
-               785 JUMP_ABSOLUTE          218
+               775 LOAD_CONST              10 (<built-in function pop_return_addr>)
+               778 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
+               781 POP_TOP
+               782 JUMP_ABSOLUTE          181
+               785 LOAD_CONST              37 (774)
                788 LOAD_CONST               0 (<built-in function push_return_addr>)
                791 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
                794 POP_TOP
-               795 JUMP_ABSOLUTE          318
-               798 JUMP_ABSOLUTE          181
-               801 LOAD_CONST               2 (True)
-               804 LOAD_FAST                2 (latest)
-               807 STORE_ATTR               2 (immediate)
-               810 JUMP_ABSOLUTE          181
-           >>  813 LOAD_CONST              37 (')')
-               816 LOAD_CONST              11 (functools.partial(<built-in function next>, <generator object make_word_impl.<locals>.read_words at 0x7fc95da09c50>))
-               819 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
-               822 COMPARE_OP               2 (==)
-               825 POP_JUMP_IF_FALSE      813
-               828 JUMP_ABSOLUTE          181
-               831 NOP
-               832 NOP
-               833 NOP
+               795 JUMP_ABSOLUTE          218
+               798 LOAD_CONST               0 (<built-in function push_return_addr>)
+               801 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
+               804 POP_TOP
+               805 JUMP_ABSOLUTE          318
+               808 JUMP_ABSOLUTE          181
+               811 LOAD_CONST               2 (True)
+               814 LOAD_FAST                2 (latest)
+               817 STORE_ATTR               2 (immediate)
+               820 JUMP_ABSOLUTE          181
+           >>  823 LOAD_CONST              38 (')')
+               826 LOAD_CONST              11 (functools.partial(<built-in function next>, <generator object make_word_impl.<locals>.read_words at 0x7f05c8223db0>))
+               829 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
+               832 COMPARE_OP               2 (==)
+               835 POP_JUMP_IF_FALSE      823
+               838 JUMP_ABSOLUTE          181
+               841 LOAD_CONST              39 (<built-in function __import__>)
+               844 ROT_TWO
+               845 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
+               848 JUMP_ABSOLUTE          181
+               851 LOAD_CONST              40 (<built-in function getattr>)
+               854 ROT_THREE
+               855 CALL_FUNCTION            2 (2 positional, 0 keyword pair)
+               858 JUMP_ABSOLUTE          181
+               861 DUP_TOP
+               862 LOAD_CONST              23 (False)
+               865 COMPARE_OP               0 (<)
+               868 POP_JUMP_IF_FALSE      886
+               871 LOAD_CONST              41 ('nargs must be >= 0; got %s')
+               874 ROT_TWO
+               875 BINARY_MODULO
+               876 LOAD_CONST              42 (<class 'ValueError'>)
+               879 ROT_TWO
+               880 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
+               883 RAISE_VARARGS            1
+           >>  886 BUILD_LIST               0
+               889 ROT_THREE
+               890 ROT_THREE
+               891 LIST_APPEND              1
+               894 STORE_FAST               6 (tmp)
+           >>  897 DUP_TOP
+               898 LOAD_CONST              23 (False)
+               901 COMPARE_OP               2 (==)
+               904 POP_JUMP_IF_TRUE       924
+               907 LOAD_CONST               2 (True)
+               910 ROT_TWO
+               911 BINARY_SUBTRACT
+               912 LOAD_FAST                6 (tmp)
+               915 ROT_THREE
+               916 ROT_THREE
+               917 LIST_APPEND              1
+               920 POP_TOP
+               921 JUMP_ABSOLUTE          897
+           >>  924 POP_TOP
+               925 LOAD_CONST              43 (<function py_call_impl at 0x7f05c82287b8>)
+               928 LOAD_FAST                6 (tmp)
+               931 CALL_FUNCTION_VAR        0 (0 positional, 0 keyword pair)
+               934 JUMP_ABSOLUTE          181
+               937 NOP
+               938 NOP
                ...
                This is where the program's free memory goes. New words will go
                in this segment.
@@ -588,7 +633,7 @@ memory size of ``2 ** 16 - 1``
            >>  985 POP_TOP
                986 ROT_TWO
                987 POP_TOP
-               988 LOAD_CONST              38 (<function handle_exception at 0x7fc95da0c2f0>)
+               988 LOAD_CONST              44 (<function handle_exception at 0x7f05c82282f0>)
                991 ROT_TWO
                992 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
                995 POP_TOP
