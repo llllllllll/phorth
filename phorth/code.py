@@ -24,6 +24,7 @@ from .primitives import (
     docol_impl,
     find_impl,
     handle_exception,
+    license_impl,
     lit_impl,
     make_word_impl,
     pop_return_addr,
@@ -583,6 +584,13 @@ def build_phorth_ctx(stack_size, memory):
         yield instructions.CALL_FUNCTION()
         yield instructions.POP_TOP()
         yield instructions.JUMP_ABSOLUTE(word_instrs['['][0])
+        yield next_instruction()
+
+    @builtin()
+    def _license():
+        yield instructions.LOAD_CONST(license_impl)
+        yield instructions.CALL_FUNCTION(0)
+        yield instructions.POP_TOP()
         yield next_instruction()
 
     @builtin()

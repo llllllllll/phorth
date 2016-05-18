@@ -38,8 +38,11 @@ setup(
     packages=[
         'phorth',
     ],
+    package_data={
+        'phorth': ['LICENSE'],
+    },
     long_description=long_description,
-    license='GPL-2',
+    license='GPL-2+',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',

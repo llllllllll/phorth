@@ -33,10 +33,11 @@ they just do stack manipulation. To get around this problem, I decided to make a
 single data stack to be managed by the interpreter. I can also take advantage of
 all of CPython instructions that work on the stack. This means that ``nip`` can
 be defined in terms of CPython instructions as ``ROT_TWO``, ``POP_TOP``. Some
-words can even be implemented as single CPython instructions, for ``POP_TOP``!
+words can even be implemented as single CPython instructions, for example:
+``drop`` is just ``POP_TOP``!
 
 Because I am not using CPython's control stack, this is implemented as a list
-stored as a local variable of the stack. The local is accessed through two
+stored as a local variable of the frame. The local is accessed through two
 functions ``push_return_addr`` and ``pop_return_addr`` which may only be called
 from a ``phorth`` context. These function inspect the calling stack frame and
 manipulate the values as needed.
@@ -56,7 +57,7 @@ mutate the code object as it was running. This is because I treat the
 ``co_code``, which is a ``bytes`` object, as a large mutable memory segment
 which acts as the ``phorth`` context's addressable memory space. In Python there
 is no way to mutate ``bytes``, which is good because they are supposed to be
-immutable; (un)fortunatly there are no such restrictions in the CPython API.
+immutable; (un)fortunatly there are no such restrictions in the CPython C API.
 
 This allows us to define new words at runtime which is critical for a
 Forth. Forth is very deeply tied to the repl and interactive experience so we
@@ -65,26 +66,25 @@ needed some way to define words on the fly.
 Computed Jumps in the CPython VM
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-CPython has no need for a computed jump instruction so the VM does no have
+CPython has no need for a computed jump instruction so the VM does not have
 one. This is totally reasonable for Python because, obviously, Python can
 compiled in such a way that a computed goto is not needed. In ``phorth``, I
 don't have as much static information so I needed to be able to jump to an
 address in the code object dynamically. To implement this the ``phorth`` context
 is actually a generator. This means that the code object has the
 ``CO_GENERATOR`` flag set and uses ``YIELD_VALUE`` instructions to pause control
-flow. The scheme that I built is that the ``phorth`` context yields an ``int``\*
-object which is the one less than the address to jump to. The reason it is one
-less that the address to jump to is that it really works by setting
-``context.gi_frame.f_lasti`` (in C++ again, this is not mutable in Python) to
-the value yielded. This means that when execution resumes, it will resume at the
-new location. I decided to yield the ``lasti`` instead of the actual target
-because in most places the location is computed as an offset from the current
-instruction pointer meaning I could subtract one from the offset there and save
-another subtraction in the runner. I didn't want to have all of my jump targets
-start with a ``POP_TOP`` so using the normal generator ``next`` code would not
-work. The runner reimplements the generator ``next`` calls to manage the
-``lasti`` assignment and reenter the code without pushing any values onto the
-stack.
+flow. The ``phorth`` context is yields ``int``\* objects which are one less than
+the address to jump to. The reason it is one less that the address to jump to is
+that it really works by setting ``context.gi_frame.f_lasti`` (in C++ again, this
+is not mutable in Python) to the value yielded. This means that when execution
+resumes, it will resume at the new location. I decided to yield the ``lasti``
+instead of the actual target because in most places the location is computed as
+an offset from the current instruction pointer meaning I could subtract one from
+the offset there and save another subtraction in the runner. I didn't want to
+have all of my jump targets start with a ``POP_TOP`` so using the normal
+generator ``next`` code would not work. The runner reimplements most of the
+``next`` function with special handling to manage the ``lasti`` assignment and
+reenter the code without pushing any values onto the stack.
 
 \* There is a special case of yielding ``None`` which means resume execution on
 the next instruction. For control flow this is a ``NOP``; however, yielding
@@ -105,36 +105,20 @@ above. The context may yield a negative number which says, "derefence the
 absolute value yielded and jump there, also decrement the value by 2 and push it
 onto the control stack". This instruction is pretty complicated but it is
 designed to make the direct threaded code model simpler. The ``docol`` procedure
-starts the threading by yielding the inverse of the next instruction onto the
-stack. This will be seen by the runner which will dereference the value, jumping
-to the function whose address appeared after the docol. It will also push
-``addr - 2``, or really the next word's address onto the control stack. Each
-word defined in ``phorth`` also ends in some ``exit`` procedure which just pops
-the top value off the control stack and throws it away because it points to the
-address after the function ends. This is basically using the control stack as a
-stack of instruction pointers for each thread.
+starts the threading by yielding the inverse of the next instruction. This will
+be seen by the runner which will dereference the value, jumping to the function
+whose address appeared after the docol. It will also push ``addr - 2``, or
+really the next word's address onto the control stack. Each word defined in
+``phorth`` also ends in some ``exit`` procedure which just pops the top value
+off the control stack and throws it away because it points to the address after
+the function ends, afterwards it yields the top value of the control stack like
+normal. This is basically using the control stack as a stack of instruction
+pointers for each thread.
 
 One side effect of this is that the ``co_code`` is really a superset of the
 CPython bytecode because there are a lot of bytes that are not valid
 instructions. This means that ``dis`` of the ``phorth`` context will often fail
 once some words are defined.
-
-Dependencies
-------------
-
-``phorth`` is built with `codetransformer
-<https://github.com/llllllllll/codetransformer>`_ which is a library for
-manipulating CPython bytecode. It is normally used for defining trasformations
-on bytecode produced by the CPython compiler; however, here it is used for the
-richer definition of an instruction and the assembler.
-
-``phorth`` is also built with `libpy <https://github.com/llllllllll/libpy>`_
-which is a modern C++ library designed to wrap the CPython C API in a more
-convenient C++ API. It is designed with low or zero cost abstractions over the
-CPython API for things like reference management or iteration. This was used to
-gather more test cases for the project to better understand how usable the
-current API is. Overall I think this helped in the development and I am excited
-to see how this be improved to help other projects in the future.
 
 Defined Words
 -------------
@@ -145,6 +129,10 @@ of words required to be a compliant forth, but ``phorth`` is not aiming for
 that. Like Python, words that start with ``_`` are pseudo private, or meant for
 debugging. This includes ``_dis`` which prints the output of ``dis`` on the
 ``phorth`` context and ``_cstack`` which prints the control (return) stack.
+
+Words starting with ``py::`` are meant to help interface with the CPython
+virtual machine. For example, ``py::getattr`` pops a string and an object from
+the stack and calls ``getattr``.
 
 .. code-block::
 
@@ -606,3 +594,32 @@ memory size of ``2 ** 16 - 1``
                995 POP_TOP
                996 POP_EXCEPT
                997 JUMP_ABSOLUTE            0
+
+
+Dependencies
+------------
+
+``phorth`` is built with `codetransformer
+<https://github.com/llllllllll/codetransformer>`_ which is a library for
+manipulating CPython bytecode. It is normally used for defining trasformations
+on bytecode produced by the CPython compiler; however, here it is used for the
+richer definition of an instruction and the assembler.
+
+``phorth`` is also built with `libpy <https://github.com/llllllllll/libpy>`_
+which is a modern C++ library designed to wrap the CPython C API in a more
+convenient C++ API. It is designed with low or zero cost abstractions over the
+CPython API for things like reference management or iteration. This was used to
+gather more test cases for the project to better understand how usable the
+current API is. Overall I think this helped in the development and I am excited
+to see how this be improved to help other projects in the future.
+
+The command line interface is built with `click
+<https://github.com/pallets/click>`_. Click is by far my favorite cli parsing
+library and I would encourage anyone building a cli to use it.
+
+License
+-------
+
+``phorth`` is free software, available under the terms of the `GNU General
+Public License, version 2 or later <http://gnu.org/licenses/gpl.html>`_. For
+more information, see ``LICENSE``.

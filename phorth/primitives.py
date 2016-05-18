@@ -1,6 +1,7 @@
 from ast import literal_eval
 from functools import partial
 import os.path as pth
+import pkg_resources
 import readline  # noqa
 import sys
 
@@ -147,3 +148,9 @@ def py_call_impl(f, *reversed_args):
         The result of calling ``f`` with ``reversed_args`` in reverse order.
     """
     return f(*reversed(reversed_args))
+
+
+def license_impl():
+    """Print the license.
+    """
+    print(pkg_resources.resource_string(__name__, 'LICENSE').decode('ascii'))
