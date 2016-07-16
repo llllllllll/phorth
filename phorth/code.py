@@ -713,7 +713,7 @@ def build_phorth_ctx(stack_size, memory):
     code = Code(
         instrs,
         argnames=argnames,
-        new_locals=True,
+        flags={'CO_NEWLOCALS': True},
     ).to_pycode()
     return here, FunctionType(
         CodeType(
