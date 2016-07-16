@@ -28,7 +28,7 @@ static wordobject *innernewword(PyTypeObject *cls,
         return nullptr;
     }
 
-    self->name = name.incref();
+    new(&self->name) py::object(name.incref());
     self->addr = py::long_::object(addr).as_unsigned_long();
     self->immediate = immediate.istrue();
 
