@@ -170,8 +170,15 @@ public:
 };
 
 namespace pyutils {
+    // auto method dispatch for word.
     template<>
-    char typeformat<word> = 'O';  // automethod dispatch
+    struct typeformat<word> {
+        static char_sequence<'O', '!'> cs;
+
+        static inline auto make_arg(word &&t) {
+            return std::make_tuple(wordtype, std::forward<word>(t));
+        }
+    };
 }
 
 py::type::object<word> Word((PyObject*) &wordtype);
