@@ -13,18 +13,15 @@ def extension(name):
     return Extension(
         'phorth.' + name,
         ['phorth/{name}.cc'.format(name=name)],
-        libraries=['py'],
-        library_dirs=['../../c++/libpy'],
-        include_dirs=['../../c++/libpy/include', 'phorth/include'],
-        language='C++',
+        include_dirs=['phorth/include'],
+        language='c++',
         extra_compile_args=[
             '-Wall',
             '-Wextra',
-            '-Wno-unused-parameter',
-            '-Wno-missing-field-initializers',
             '-Wno-write-strings',
-            '-std=gnu++14',
-            '-O0',
+            '-Wno-cast-function-type',
+            '-Wno-missing-field-initializers',
+            '-std=gnu++17',
         ],
     )
 

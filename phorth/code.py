@@ -49,7 +49,7 @@ class NotAWord(Exception):
 
 _CMP = instructions.COMPARE_OP
 _single_instr_words = {
-    '^': instructions.BINARY_POWER,
+    '^': instructions.BINARY_XOR,
     '*': instructions.BINARY_MULTIPLY,
     '/': instructions.BINARY_TRUE_DIVIDE,
     'mod': instructions.BINARY_MODULO,

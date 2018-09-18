@@ -9,9 +9,7 @@ interpret our ``phorth`` programs with an unmodified version of CPython using
 the same interpreter loop that handles normal python code objects.
 
 \* C++ is used where the VM is too restrictive. This is mainly used to handle
-dynamic jumps which there is no opcode for in CPython. This was also an exucuse
-for me to play with my new `libpy <https://www.github.com/llllllllll/libpy>`_
-project.
+dynamic jumps which there is no opcode for in CPython.
 
 Purpose
 -------
@@ -649,14 +647,6 @@ Dependencies
 manipulating CPython bytecode. It is normally used for defining trasformations
 on bytecode produced by the CPython compiler; however, here it is used for the
 richer definition of an instruction and the assembler.
-
-``phorth`` is also built with `libpy <https://github.com/llllllllll/libpy>`_
-which is a modern C++ library designed to wrap the CPython C API in a more
-convenient C++ API. It is designed with low or zero cost abstractions over the
-CPython API for things like reference management or iteration. This was used to
-gather more test cases for the project to better understand how usable the
-current API is. Overall I think this helped in the development and I am excited
-to see how this be improved to help other projects in the future.
 
 The command line interface is built with `click
 <https://github.com/pallets/click>`_. Click is by far my favorite cli parsing

@@ -64,3 +64,4 @@ MANIFEST
 .cache
 
 htmlcov
+.gdb_history
