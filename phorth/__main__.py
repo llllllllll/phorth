@@ -18,8 +18,13 @@ from phorth.runner import run_phorth
     type=int,
     help='The size the the memory space for the phorth program.',
 )
-def main(memory, stack_size):
-    run_phorth(stack_size, memory)
+@click.option(
+    '--with-stdlib/--without-stdlib',
+    default=True,
+    help='Include stdlib.fs in the default vocabulary?',
+)
+def main(memory, stack_size, with_stdlib):
+    run_phorth(stack_size, memory, stdlib=with_stdlib)
 
 
 if __name__ == '__main__':

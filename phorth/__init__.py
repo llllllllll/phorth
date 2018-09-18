@@ -1,1 +1,1 @@
-__version__ = '0.1.0'
+from .runner import version as __version__  # noqa

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from setuptools import setup, Extension
 import sys
 
@@ -25,6 +24,7 @@ def extension(name):
         ],
     )
 
+
 setup(
     name='phorth',
     version='0.1.0',
@@ -44,9 +44,13 @@ setup(
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
         'Natural Language :: English',
+        'Operating System :: POSIX',
+        'Programming Language :: C++',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: Implementation :: CPython',
-        'Operating System :: POSIX',
+        'Programming Language :: Python',
+        'Topic :: Software Development :: Compilers',
+        'Topic :: Software Development :: Interpreters',
     ],
     url='https://github.com/llllllllll/phorth',
     ext_modules=[

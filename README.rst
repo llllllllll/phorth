@@ -307,7 +307,7 @@ memory size of ``2 ** 16 - 1``
                165 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
                168 UNPACK_SEQUENCE          2
                171 YIELD_VALUE
-           >>  172 LOAD_CONST              11 (functools.partial(<built-in function next>, <generator object make_word_impl.<locals>.read_words at 0x7f05c8223db0>))
+           >>  172 LOAD_CONST              11 (functools.partial(<built-in function next>, <generator object read_words at 0x7f05c8223db0>))
                175 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
                178 JUMP_ABSOLUTE          181
            >>  181 LOAD_CONST              10 (<built-in function pop_return_addr>)
@@ -573,7 +573,7 @@ memory size of ``2 ** 16 - 1``
                817 STORE_ATTR               2 (immediate)
                820 JUMP_ABSOLUTE          181
            >>  823 LOAD_CONST              38 (')')
-               826 LOAD_CONST              11 (functools.partial(<built-in function next>, <generator object make_word_impl.<locals>.read_words at 0x7f05c8223db0>))
+               826 LOAD_CONST              11 (functools.partial(<built-in function next>, <generator object read_words at 0x7f05c8223db0>))
                829 CALL_FUNCTION            0 (0 positional, 0 keyword pair)
                832 COMPARE_OP               2 (==)
                835 POP_JUMP_IF_FALSE      823

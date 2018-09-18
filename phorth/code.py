@@ -26,7 +26,6 @@ from .primitives import (
     handle_exception,
     license_impl,
     lit_impl,
-    make_word_impl,
     pop_return_addr,
     print_stack_impl,
     process_lit,
@@ -84,7 +83,7 @@ if hasattr(instructions, 'BINARY_MATRIX_MULTIPLY'):
     _single_instr_words['matmul'] = instructions.BINARY_MATRIX_MULTIPLY
 
 
-def build_phorth_ctx(stack_size, memory):
+def build_phorth_ctx(stack_size, memory, word_impl):
     """Create a phorth context with the given stack size and memory.
 
     This context will have only the primitive words defined but is ready for
@@ -92,6 +91,9 @@ def build_phorth_ctx(stack_size, memory):
 
     Parameters
     ----------
+    word_impl : callable[str]
+        A function which returns the next word to read. When there are no more
+        words, this function should raise :class:`phorth.Done``.
     stack_size : int
         The size of the stack to build in the phorth frame.
     memory : int
@@ -184,7 +186,7 @@ def build_phorth_ctx(stack_size, memory):
         yield instructions.DUP_TOP()
         yield instructions.PRINT_EXPR()
 
-    def _word(word_impl=make_word_impl()):
+    def _word():
         yield instructions.LOAD_CONST(word_impl)
         yield instructions.CALL_FUNCTION(0)
 
