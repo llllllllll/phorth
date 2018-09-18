@@ -38,4 +38,4 @@
   rot rot ;
 
 : tuck ( n1 n2 -- n2 n1 n2 )
-  dup -rot ;
+  dup rot ;

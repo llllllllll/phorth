@@ -72,6 +72,7 @@ _single_instr_words = {
     '<>': partial(_CMP, _CMP.comparator.NE),
     '<': partial(_CMP, _CMP.comparator.LT),
     '<=': partial(_CMP, _CMP.comparator.LE),
+    'py::getitem': instructions.BINARY_SUBSCR,
     'true': partial(instructions.LOAD_CONST, True),
     'false': partial(instructions.LOAD_CONST, False),
     'none': partial(instructions.LOAD_CONST, None),
@@ -681,7 +682,6 @@ def build_phorth_ctx(stack_size, memory, word_impl):
         yield instructions.POP_JUMP_IF_TRUE(call_impl)
 
         yield instructions.LOAD_CONST(1)
-        yield instructions.ROT_TWO()
         yield instructions.BINARY_SUBTRACT()
         yield instructions.LOAD_FAST('tmp')
         yield from _nrot()
